@@ -1,0 +1,16 @@
+{
+    "name": "pkristian/symsync",
+    "require-dev": {},
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrik Kristian",
+            "email": "patrik@pkristian.cz"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "nette/utils": "^2.4",
+        "nette/finder": "^2.4"
+    }
+}
