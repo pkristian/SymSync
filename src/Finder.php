@@ -1,6 +1,6 @@
 <?php
 
-namespace SymSync;
+namespace pkristian\SymSync;
 
 use Nette\Utils\Strings;
 
