@@ -7,7 +7,9 @@ namespace pkristian\SymSync\Action;
 class ExitAction extends BaseAction
 {
 
-	public $description = 'exit';
+	public const ACTION = 'x';
+
+	public const DESCRIPTION = 'exit';
 
 
 	public function perform(\pkristian\SymSync\Item $item): void

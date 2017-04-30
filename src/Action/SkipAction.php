@@ -7,11 +7,14 @@ namespace pkristian\SymSync\Action;
 class SkipAction extends BaseAction
 {
 
-	public $description = 'skip';
+	public const ACTION = 'S';
+
+	public const DESCRIPTION = 'skip';
 
 
 	public function perform(\pkristian\SymSync\Item $item): void
 	{
+		\pkristian\SymSync\Verbose::line("Going to next item.");
 		return;
 	}
 

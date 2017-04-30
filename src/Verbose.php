@@ -47,14 +47,13 @@ class Verbose
 	}
 
 
-	public static function ask($question, array $options)
+	public static function ask($question, array $options = null)
 	{
-		$options = array_map('strtolower', $options);
 		do
 		{
 			self::line($question . ' ');
-			$line = self::getUserInput();
-			$response = strtolower($line);
+			$response= self::getUserInput();
+			if (is_null($options)) return null;
 		} while (!in_array($response, $options));
 
 		return $response;

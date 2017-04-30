@@ -122,15 +122,26 @@ class Pager
 		foreach ($actions as $actKey => $action)
 		{
 			$isPossilbe = $action->isPossible($item);
-			if (!$isPossilbe) unset($actions[$actKey]);
+			if (!$isPossilbe)
+			{
+				unset($actions[$actKey]);
+				continue;
+			}
 			Verbose::line(Strings::padRight("  " . $actKey, self::PAD_SECTION));
-			Verbose::output($action->description);
+			Verbose::output($action::DESCRIPTION);
 		}
 		$actionKeys = array_keys($actions);
 
 
-		$response = Verbose::ask('What to do? (' . implode('/', $actionKeys) . ')', array_merge([''], $actionKeys));
-		if (in_array($response, ['', 's'])) $response = 'S';
+		$response = Verbose::ask(
+			'What to do? (' . implode('/', $actionKeys) . ')'
+			,
+			array_merge([''], $actionKeys)
+		);
+		if (in_array(
+			$response,
+			['', \pkristian\SymSync\Action\BaseAction::DEFAULT_ACTION]
+		)) $response = \pkristian\SymSync\Action\BaseAction::DEFAULT_ACTION;
 
 		return $actions[$response];
 	}

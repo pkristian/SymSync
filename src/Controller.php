@@ -49,16 +49,29 @@ class Controller
 
 		foreach ($this->items as $offset => $item)
 		{
-			$action = $this->pager->itemDetail(
-				$item
-				,
-				$offset + 1
-				,
-				count($this->items)
-				,
-				$this->loadActions()
-			);
-			$action->perform($item);
+			do
+			{
+				$action = $this->pager->itemDetail(
+					$item
+					,
+					$offset + 1
+					,
+					count($this->items)
+					,
+					$this->loadActions()
+				);
+
+
+				try
+				{
+					$action->perform($item);
+				}
+				catch (\Exception $e)
+				{
+					Verbose::error($e->getMessage());
+				}
+				Verbose::ask("Press [enter] to continue...");
+			} while ($action::ACTION !== $action::DEFAULT_ACTION);
 		}
 
 
@@ -79,7 +92,7 @@ class Controller
 		$masterItems = $masterFinder->findNames();
 
 		$slaveFinder = new Finder(
-			$this->config->master
+			$this->config->slave
 			, $this->config->pattern
 			, $this->config->ignore
 			, $this->config->depth
@@ -102,10 +115,26 @@ class Controller
 	 */
 	private function loadActions(): array
 	{
-		return [
-			'S' => new Action\SkipAction(),
-			'e' => new Action\ExitAction(),
+		$actions = [
+			new Action\SkipAction(),
+			new Action\ExitAction(),
+			new Action\DeleteMasterAction(),
+			new Action\DeleteSlaveAction(),
+			new Action\CopyMasterToSlaveAction(),
+			new Action\CopySlaveToMasterAction(),
+			new Action\LinkMasterAction(),
 		];
+		$outputActions = [];
+
+		/** @var \pkristian\SymSync\Action\BaseAction $action */
+		foreach ($actions as $action)
+		{
+			$outputActions[$action::ACTION] = $action;
+		}
+
+		return $outputActions;
+
+
 	}
 
 

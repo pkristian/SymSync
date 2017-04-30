@@ -46,6 +46,25 @@ class Item
 	}
 
 
+	public function isPresent($master)
+	{
+		if (
+			$this->isLink($master)
+			or
+			$this->isFile($master)
+			or
+			$this->isDir($master)
+		)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+
+
+
 	public function getPath($master = null)
 	{
 		if (is_null($master))
