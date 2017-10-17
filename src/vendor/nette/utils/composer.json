@@ -33,7 +33,9 @@
 		"nette/nette": "<2.2"
 	},
 	"autoload": {
-		"classmap": ["src/"]
+		"classmap": [
+			"src"
+		]
 	},
 	"minimum-stability": "dev",
 	"extra": {
